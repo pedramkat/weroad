@@ -9,7 +9,7 @@ use Illuminate\Auth\Access\Response;
 class TravelPolicy
 {
     /**
-     * Only Editor can access to Layers
+     * Only Admin can access to Travels
      *
      * @param User $user
      * @return bool
