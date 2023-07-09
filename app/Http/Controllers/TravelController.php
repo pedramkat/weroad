@@ -11,7 +11,7 @@ class TravelController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): void
     {
         //
     }
@@ -19,7 +19,7 @@ class TravelController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): void
     {
         //
     }
@@ -27,7 +27,7 @@ class TravelController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTravelRequest $request)
+    public function store(StoreTravelRequest $request): void
     {
         //
     }
@@ -35,7 +35,7 @@ class TravelController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Travel $travel)
+    public function show(Travel $travel): void
     {
         //
     }
@@ -43,7 +43,7 @@ class TravelController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Travel $travel)
+    public function edit(Travel $travel): void
     {
         //
     }
@@ -51,7 +51,7 @@ class TravelController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTravelRequest $request, Travel $travel)
+    public function update(UpdateTravelRequest $request, Travel $travel): void
     {
         //
     }
@@ -59,7 +59,7 @@ class TravelController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Travel $travel)
+    public function destroy(Travel $travel): void
     {
         //
     }
