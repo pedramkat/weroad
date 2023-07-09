@@ -50,19 +50,19 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     /**
      * Get the dashboards that should be listed in the Nova sidebar.
      *
-     * @return array
+     * @return array<int,mixed>
      */
     protected function dashboards()
     {
         return [
-            new \App\Nova\Dashboards\Main,
+            new \App\Nova\Dashboards\Main(),
         ];
     }
 
     /**
      * Get the tools that should be listed in the Nova sidebar.
      *
-     * @return array
+     * @return array<int,mixed>
      */
     public function tools()
     {

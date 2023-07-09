@@ -10,12 +10,12 @@ class Main extends Dashboard
     /**
      * Get the cards for the dashboard.
      *
-     * @return array
+     * @return array<int,mixed>
      */
     public function cards()
     {
         return [
-            new Help,
+            new Help(),
         ];
     }
 }
