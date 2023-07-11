@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\V1\TravelControllerV1;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +16,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout']);
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::name('api.')->group(function () {
+    Route::prefix('v1')->name('v1')->middleware('auth:sanctum', 'verified')->group(function () {
+        Route::get('/travels', [TravelControllerV1::class, 'index'])->name('travelIndex');
+    });
 });

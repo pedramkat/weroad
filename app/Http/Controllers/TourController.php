@@ -11,7 +11,7 @@ class TourController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): void
     {
         //
     }
@@ -19,7 +19,7 @@ class TourController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): void
     {
         //
     }
@@ -27,7 +27,7 @@ class TourController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTourRequest $request)
+    public function store(StoreTourRequest $request): void
     {
         //
     }
@@ -35,7 +35,7 @@ class TourController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Tour $tour)
+    public function show(Tour $tour): void
     {
         //
     }
@@ -43,7 +43,7 @@ class TourController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Tour $tour)
+    public function edit(Tour $tour): void
     {
         //
     }
@@ -51,7 +51,7 @@ class TourController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTourRequest $request, Tour $tour)
+    public function update(UpdateTourRequest $request, Tour $tour): void
     {
         //
     }
@@ -59,7 +59,7 @@ class TourController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Tour $tour)
+    public function destroy(Tour $tour): void
     {
         //
     }
