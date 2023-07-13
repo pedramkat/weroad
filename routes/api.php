@@ -17,14 +17,15 @@ use App\Http\Controllers\LoginController;
 */
 
 Route::post('/login', [LoginController::class, 'login']);
-Route::post('/logout', [LoginController::class, 'logout']);
+Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth:sanctum');
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 Route::name('api.')->group(function () {
     Route::prefix('v1')->name('v1')->middleware('auth:sanctum', 'verified')->group(function () {
-        Route::get('/travels', [TravelControllerV1::class, 'index'])->name('travelIndex');
+        Route::get('/travels', [TravelControllerV1::class, 'index'])->name('travelIndex')->middleware('restrictRole:admin');
+        Route::get('/travel', [TravelControllerV1::class, 'store'])->name('travelStore');
     });
 });

@@ -5,10 +5,7 @@ namespace App\Http\Controllers\V1;
 use App\Http\Controllers\Controller;
 use App\Models\Travel;
 use Exception;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-
-define('_BOUNDIG_BOX_LIMIT', 0.1);
 
 class TravelControllerV1 extends Controller
 {
@@ -64,10 +61,95 @@ class TravelControllerV1 extends Controller
 
     public function index()
     {
-        $lists = Travel::all()->toArray();
+        $perPage = 5; // Number of resources per page
+
+        // Using eloquent
+        $lists = Travel::where('isPublic', true)->paginate($perPage)->toArray();
+        if (count($lists['data']) < 1) {
+            return $this->sendError('No travel found.');
+        }
+
+        // Using DB query for larger databases
+        // $lists = DB::table('travels')
+        //     ->where('isPublic', true)
+        //     ->paginate($perPage);
+
+        // if ($lists->count() < 1) {
+        //     return $this->sendError('No travel found.');
+        // }
 
         // Return
-        return response($lists, 200, ['Content-type' => 'application/json']);
+        return $this->sendResponse($lists, 'Travels found successfully.');
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        // Auth::user();
+        try {
+            $request->validate([
+                'ticket_type' => [
+                    'required',
+                    Rule::in(['reservation', 'info', 'abandonment', 'report']),
+                ],
+            ]);
+        } catch (Exception $e) {
+            return $this->sendError($e->getMessage());
+        }
+
+        // Create Ticket
+        $ticket = new Ticket();
+        $ticket->ticket_type = $request->ticket_type;
+        $ticket->company_id = $request->id;
+        $ticket->user_id = Auth::user()->id;
+        if ($request->exists('trash_type_id')) {
+            $ticket->trash_type_id = $request->trash_type_id;
+        }
+        if ($request->exists('note')) {
+            $ticket->note = $request->note;
+        }
+        if ($request->exists('phone')) {
+            $ticket->phone = $request->phone;
+        }
+        if ($request->exists('image')) {
+            $ticket->image = $request->image;
+        }
+        if ($request->exists('location')) {
+            $ticket->geometry = (DB::select(DB::raw("SELECT ST_GeomFromText('POINT({$request->location[1]} {$request->location[0]})') as g;")))[0]->g;
+
+            // Curl request to get the feature information from external source
+            $lat = $request->location[0];
+            $lon = $request->location[1];
+            $url = "https://nominatim.openstreetmap.org/reverse?lat=$lat&lon=$lon&format=json";
+            $response = $this->curlRequest($url);
+
+            if ($response) {
+                if (array_key_exists('display_name', $response)) {
+                    $ticket->location_address = $response['display_name'];
+                }
+                if (array_key_exists('error', $response)) {
+                    $ticket->location_address = $response['error'];
+                }
+            }
+        }
+        $res = $ticket->save();
+
+        // Send a notification email to company for the newly created ticket
+        if ($res) {
+            $company = Company::find($request->id);
+            if ($company->ticket_email) {
+                foreach (explode(',', $company->ticket_email) as $recipient) {
+                    Mail::to($recipient)->send(new TicketCreated($ticket, $company));
+                }
+            }
+        }
+
+        // Response
+        return $this->sendResponse($ticket, 'Ticket created.');
+    }
 }
