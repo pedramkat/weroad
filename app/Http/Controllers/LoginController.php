@@ -104,7 +104,7 @@ class LoginController extends Controller
                 $user = Auth::user();
                 $success['token'] =  $user->createToken('access_token')->plainTextToken;
                 $success['name'] =  $user->name;
-                $success['role'] =  $user->role->name;
+                $success['role'] =  $user->roles->pluck('name')->toArray();
                 $success['email_verified_at'] =  $user->email_verified_at;
 
                 return $this->sendResponse($success, 'User login successfully.');

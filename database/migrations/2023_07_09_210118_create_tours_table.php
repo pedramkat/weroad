@@ -12,6 +12,7 @@ return new class () extends Migration {
     {
         Schema::create('tours', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->foreignUuid('travelId')->constrained('travels');
             $table->string('name');
             $table->date('startingDate')->nullable();
             $table->date('endingDate')->nullable();

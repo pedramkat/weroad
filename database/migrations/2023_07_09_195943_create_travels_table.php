@@ -12,6 +12,7 @@ return new class () extends Migration {
     {
         Schema::create('travels', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            // In production the default value may be
             $table->boolean('isPublic')->default(true);
             $table->string('slug')->unique();
             $table->string('name');

@@ -13,6 +13,7 @@ use Laravel\Nova\Auth\Impersonatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Contracts\Auth\CanResetPassword;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
 {
@@ -57,11 +58,11 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     /**
      * The belongs to relation with Role model.
      *
-     * @return BelongsTo
+     * @return BelongsToMany
      */
-    public function role(): BelongsTo
+    public function roles(): BelongsToMany
     {
-        return $this->belongsTo(Role::class);
+        return $this->belongsToMany(Role::class, 'role_user', 'user_id', 'role_id');
     }
 
     /**

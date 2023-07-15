@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\TravelResource;
 use App\Models\Travel;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class TravelControllerV1 extends Controller
 {
@@ -58,28 +61,11 @@ class TravelControllerV1 extends Controller
      *     ),
      * )
      */
-
     public function index()
     {
-        $perPage = 5; // Number of resources per page
-
         // Using eloquent
-        $lists = Travel::where('isPublic', true)->paginate($perPage)->toArray();
-        if (count($lists['data']) < 1) {
-            return $this->sendError('No travel found.');
-        }
-
-        // Using DB query for larger databases
-        // $lists = DB::table('travels')
-        //     ->where('isPublic', true)
-        //     ->paginate($perPage);
-
-        // if ($lists->count() < 1) {
-        //     return $this->sendError('No travel found.');
-        // }
-
-        // Return
-        return $this->sendResponse($lists, 'Travels found successfully.');
+        $travels = Travel::where('isPublic', true)->paginate(5);
+        return TravelResource::collection($travels);
     }
 
     /**

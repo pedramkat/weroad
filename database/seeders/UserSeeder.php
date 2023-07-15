@@ -15,19 +15,23 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         //Create Admin user
-        User::factory()->create([
+        $adminuser = User::create([
             'name' => 'Admin',
             'email' => 'admin@weroad.it',
             'password' => bcrypt('admin'),
-            'role_id' => Role::where('name', 'admin')->first()->id
-        ])->markEmailAsVerified();
+        ]);
+        $adminuser->roles()->sync(Role::all()->pluck('id')->toArray());
+        $adminuser->markEmailAsVerified();
+        $adminuser->save();
 
         // Create Editor user
-        User::factory()->create([
+        $editorUser = User::create([
             'name' => 'Editor',
             'email' => 'editor@weroad.it',
             'password' => bcrypt('editor'),
-            'role_id' => Role::where('name', 'editor')->first()->id
-        ])->markEmailAsVerified();
+        ]);
+        $editorUser->roles()->sync(Role::where('name', 'editor')->pluck('id')->toArray());
+        $editorUser->markEmailAsVerified();
+        $editorUser->save();
     }
 }

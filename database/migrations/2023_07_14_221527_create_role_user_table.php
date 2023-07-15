@@ -10,9 +10,10 @@ return new class () extends Migration {
      */
     public function up(): void
     {
-        Schema::table('tours', function (Blueprint $table) {
-            $table->uuid('travelId');
-            $table->foreign('travelId')->references('id')->on('travels');
+        Schema::create('role_user', function (Blueprint $table) {
+            $table->foreignUuid('role_id')->constrained();
+            $table->foreignUuid('user_id')->constrained();
+            $table->timestamps();
         });
     }
 
@@ -21,8 +22,6 @@ return new class () extends Migration {
      */
     public function down(): void
     {
-        Schema::table('tours', function (Blueprint $table) {
-            $table->dropForeign(['travelId']);
-        });
+        Schema::dropIfExists('role_user');
     }
 };

@@ -17,7 +17,16 @@ class TravelFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->text(15),
+            'slug' => fake()->slug(15),
+            'isPublic' => fake()->boolean(),
+            'description' => fake()->text(100),
+            'numberOfDays' => rand(1, 14),
+            'nature' => rand(1, 10) * 10,
+            'relax' => rand(1, 10) * 10,
+            'history' => rand(1, 10) * 10,
+            'culture' => rand(1, 10) * 10,
+            'party' => rand(1, 10) * 10,
         ];
     }
 }

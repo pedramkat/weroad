@@ -24,8 +24,11 @@ Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth:san
 // });
 
 Route::name('api.')->group(function () {
+    Route::prefix('v1')->name('v1')->group(function () {
+        Route::get('/travels', [TravelControllerV1::class, 'index'])->name('travelIndex');
+    });
     Route::prefix('v1')->name('v1')->middleware('auth:sanctum', 'verified')->group(function () {
-        Route::get('/travels', [TravelControllerV1::class, 'index'])->name('travelIndex')->middleware('restrictRole:admin');
+        // Route::get('/travels', [TravelControllerV1::class, 'index'])->name('travelIndex')->middleware('restrictRole:admin');
         Route::get('/travel', [TravelControllerV1::class, 'store'])->name('travelStore');
     });
 });

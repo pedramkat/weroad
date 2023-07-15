@@ -21,14 +21,4 @@ class Role extends Model
         'id',
         'name',
     ];
-
-    /**
-     * The belongs to many relation with User model.
-     *
-     * @return HasMany
-     */
-    public function users(): HasMany
-    {
-        return $this->hasMany(User::class);
-    }
 }
