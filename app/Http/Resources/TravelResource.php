@@ -16,16 +16,17 @@ class TravelResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'isPublic' => $this->isPublic,
             'name' => $this->name,
             'slug' => $this->slug,
             'description' => $this->description,
             'numberOfDays' => $this->numberOfDays,
             'numberOfNights' => $this->numberOfNights,
-            'nature'=> 80,
-            'relax'=> 20,
-            'history'=> 90,
-            'culture'=> 30,
-            'party'=> 10,
+            'nature' => $this->nature,
+            'relax' => $this->relax,
+            'history' => $this->history,
+            'culture' => $this->culture,
+            'party' => $this->party,
         ];
     }
 }

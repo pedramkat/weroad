@@ -25,8 +25,11 @@ Route::name('api.')->group(function () {
         Route::get('/travels', [TravelController::class, 'index'])->name('travelIndex');
         Route::get('/travels/{travel:slug}/tours', [TourController::class, 'index'])->name('tourIndex');
     });
-    Route::prefix('v1')->name('v1')->middleware('auth:sanctum', 'restrictRole:admin')->group(function () {
-        Route::post('/travel', [TravelController::class, 'store'])->name('travelStore');
-        Route::post('/travels/{travel:slug}/tour', [TourController::class, 'store'])->name('tourStore');
+    Route::prefix('v1')->name('v1')->middleware('auth:sanctum')->group(function () {
+        Route::middleware('restrictRole:admin')->group(function() {
+            Route::post('/travel', [TravelController::class, 'store'])->name('travelStore');
+            Route::post('/travels/{travel:slug}/tour', [TourController::class, 'store'])->name('tourStore');
+        });
+        Route::put('/travels/{travel:slug}', [TravelController::class, 'update'])->name('travelUpdate');
     });
 });

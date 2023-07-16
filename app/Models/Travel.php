@@ -28,6 +28,7 @@ class Travel extends Model
      */
     protected $fillable = [
         'id',
+        'isPublic',
         'slug',
         'name',
         'description',

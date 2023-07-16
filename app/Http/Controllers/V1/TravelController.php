@@ -3,13 +3,11 @@
 namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\TravelRequest;
+use App\Http\Requests\StoreTravelRequest;
+use App\Http\Requests\UpdateTravelRequest;
 use App\Http\Resources\TravelResource;
 use App\Models\Travel;
-use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Validation\Rule;
 
 class TravelController extends Controller
 {
@@ -18,7 +16,6 @@ class TravelController extends Controller
      *     path="/api/v1/travels",
      *     summary="Get all travels",
      *     description="Retrieve a list of all travels",
-     *     operationId="getAllTravels",
      *     tags={"Api v1 - Travels"},
      *     security={{ "sanctum": {} }},
      *     @OA\Response(
@@ -61,6 +58,11 @@ class TravelController extends Controller
      *         description="Travel destination"
      *     ),
      * )
+     * 
+     * Give a paginated list of public travels.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -70,79 +72,83 @@ class TravelController extends Controller
     }
 
     /**
+     *  * @OA\Post(
+    *     path="/api/v1/travels",
+    *     summary="Create a new travel",
+    *     description="Store a newly created travel in the database",
+    *     tags={"Api v1 - Travels"},
+    *     security={{ "sanctum": {} }},
+    *     @OA\RequestBody(
+    *         required=true,
+    *         @OA\MediaType(
+    *             mediaType="application/json",
+    *         )
+    *     ),
+    *     @OA\Response(
+    *         response=200,
+    *         description="Travel created successfully",
+    *     ),
+    *     @OA\Response(
+    *         response=422,
+    *         description="Validation error",
+    *     )
+    * )
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TravelRequest $request)
+    public function store(StoreTravelRequest $request)
     {
-
         $travel = Travel::create($request->validated());
 
         return new TravelResource($travel);
+    }
 
-
-        // Auth::user();
-        try {
-            $request->validate([
-                'ticket_type' => [
-                    'required',
-                    Rule::in(['reservation', 'info', 'abandonment', 'report']),
-                ],
-            ]);
-        } catch (Exception $e) {
-            return $this->sendError($e->getMessage());
-        }
-
-        // Create Ticket
-        $ticket = new Ticket();
-        $ticket->ticket_type = $request->ticket_type;
-        $ticket->company_id = $request->id;
-        $ticket->user_id = Auth::user()->id;
-        if ($request->exists('trash_type_id')) {
-            $ticket->trash_type_id = $request->trash_type_id;
-        }
-        if ($request->exists('note')) {
-            $ticket->note = $request->note;
-        }
-        if ($request->exists('phone')) {
-            $ticket->phone = $request->phone;
-        }
-        if ($request->exists('image')) {
-            $ticket->image = $request->image;
-        }
-        if ($request->exists('location')) {
-            $ticket->geometry = (DB::select(DB::raw("SELECT ST_GeomFromText('POINT({$request->location[1]} {$request->location[0]})') as g;")))[0]->g;
-
-            // Curl request to get the feature information from external source
-            $lat = $request->location[0];
-            $lon = $request->location[1];
-            $url = "https://nominatim.openstreetmap.org/reverse?lat=$lat&lon=$lon&format=json";
-            $response = $this->curlRequest($url);
-
-            if ($response) {
-                if (array_key_exists('display_name', $response)) {
-                    $ticket->location_address = $response['display_name'];
-                }
-                if (array_key_exists('error', $response)) {
-                    $ticket->location_address = $response['error'];
-                }
-            }
-        }
-        $res = $ticket->save();
-
-        // Send a notification email to company for the newly created ticket
-        if ($res) {
-            $company = Company::find($request->id);
-            if ($company->ticket_email) {
-                foreach (explode(',', $company->ticket_email) as $recipient) {
-                    Mail::to($recipient)->send(new TicketCreated($ticket, $company));
-                }
-            }
-        }
-
-        // Response
-        return $this->sendResponse($ticket, 'Ticket created.');
+    /**
+     * 
+     *  * @OA\Put(
+    *     path="/api/v1/travels/{travel:slug}",
+    *     summary="Update a travel",
+    *     description="Update an existing travel in the database base on the give slug",
+    *     tags={"Api v1 - Travels"},
+    *     security={{ "sanctum": {} }},
+    *     @OA\Parameter(
+    *         name="travel",
+    *         in="path",
+    *         description="ID of the travel to update",
+    *         required=true,
+    *         @OA\Schema(
+    *             type="integer",
+    *             format="int64"
+    *         )
+    *     ),
+    *     @OA\RequestBody(
+    *         required=true,
+    *         @OA\MediaType(
+    *             mediaType="application/json",
+    *         )
+    *     ),
+    *     @OA\Response(
+    *         response=200,
+    *         description="Travel updated successfully",
+    *     ),
+    *     @OA\Response(
+    *         response=422,
+    *         description="Validation error",
+    *     )
+    * )
+     * 
+     * Updates a an existing travel in storage.
+     *
+     * @param \App\Models\Travel $travel
+     * @param  \Illuminate\Http\Requests\UpdateTravelRequest  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Travel $travel, UpdateTravelRequest $request)
+    {
+        $travel->update($request->validated());
+        
+        return new TravelResource($travel);
     }
 }
