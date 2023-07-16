@@ -96,8 +96,8 @@ class LoginController extends Controller
     {
         try {
             $request->validate([
-                'email' => ['required'],
-                'password' => ['required']
+                'email' => ['required','string','email'],
+                'password' => ['required','string']
             ]);
 
             if (Auth::attempt($request->only('email', 'password'))) {
@@ -114,7 +114,7 @@ class LoginController extends Controller
                 'email' => ['The provided credentials are incorrect.']
             ]);
         } catch (Exception $e) {
-            return $this->sendError($e->getMessage());
+            return $this->sendError($e->getMessage(),422);
         }
     }
 

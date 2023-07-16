@@ -60,6 +60,7 @@ class Travel extends Resource
                 ->sortable(),
 
             Number::make('Number Of Days', 'numberOfDays'),
+            Number::make('Number Of Days', 'numberOfNights')->onlyOnDetail(),
 
             Number::make('Nature', 'nature')->hideFromIndex(),
 

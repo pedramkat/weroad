@@ -64,6 +64,10 @@ class Tour extends Resource
                 })
                 ->rules('required', 'date'),
 
+            // Number::make('Price', 'price')
+            //     ->displayUsing(function ($value) {
+            //         return $this->price; // Access the accessor method
+            //     }),
             Currency::make('Price', 'price')
                 ->currency('EUR'),
 

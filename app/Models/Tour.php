@@ -33,8 +33,9 @@ class Tour extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'startingDate' => 'date',
-        'endingDate' => 'date',
+        'startingDate' => 'date:Y-m-d',
+        'endingDate' => 'date:Y-m-d',
+        'price' => 'integer'
     ];
 
     /**
@@ -54,9 +55,11 @@ class Tour extends Model
      */
     protected function price(): Attribute
     {
+        $value = $this->attributes['price'] ?? 100;
+
         return Attribute::make(
-            get: fn (int $value) => $value / 100,
-            set: fn (int $value) => $value * 100,
+            get: fn ($value) => $value / 100,
+            set: fn ($value) => $value * 100,
         );
     }
 }

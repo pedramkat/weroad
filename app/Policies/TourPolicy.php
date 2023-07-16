@@ -13,7 +13,7 @@ class TourPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->role->name == 'editor' || $user->role->name == 'admin';
+        return $user->roles->contains('name', 'editor') || $user->roles->contains('name', 'admin');
     }
 
     /**
@@ -21,7 +21,7 @@ class TourPolicy
      */
     public function view(User $user, Tour $tour): bool
     {
-        return $user->role->name == 'editor' || $user->role->name == 'admin';
+        return $user->roles->contains('name', 'editor') || $user->roles->contains('name', 'admin');
     }
 
     /**
@@ -29,7 +29,7 @@ class TourPolicy
      */
     public function create(User $user): bool
     {
-        return $user->role->name == 'admin';
+        return $user->roles->contains('name', 'admin');
     }
 
     /**
@@ -37,7 +37,7 @@ class TourPolicy
      */
     public function update(User $user, Tour $tour): bool
     {
-        return $user->role->name == 'editor' || $user->role->name == 'admin';
+        return $user->roles->contains('name', 'editor') || $user->roles->contains('name', 'admin');
     }
 
     /**
@@ -45,7 +45,7 @@ class TourPolicy
      */
     public function delete(User $user, Tour $tour): bool
     {
-        return $user->role->name == 'admin';
+        return $user->roles->contains('name', 'admin');
     }
 
     /**
@@ -53,7 +53,7 @@ class TourPolicy
      */
     public function restore(User $user, Tour $tour): bool
     {
-        return $user->role->name == 'admin';
+        return $user->roles->contains('name', 'admin');
     }
 
     /**
@@ -61,6 +61,6 @@ class TourPolicy
      */
     public function forceDelete(User $user, Tour $tour): bool
     {
-        return $user->role->name == 'admin';
+        return $user->roles->contains('name', 'admin');
     }
 }

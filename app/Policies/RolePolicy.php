@@ -16,7 +16,7 @@ class RolePolicy
      */
     public function before(User $user)
     {
-        return $user->role->name == 'admin';
+        return $user->roles->contains('name', 'admin');
     }
 
     /**

@@ -72,7 +72,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
      */
     public function canImpersonate()
     {
-        if(auth()->user()->role->name == 'admin') {
+        if(auth()->user()->roles->contains('name', 'admin')) {
             return true;
         }
         return false;
@@ -85,7 +85,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
      */
     public function canBeImpersonated()
     {
-        if($this->role->name == 'editor') {
+        if($this->roles->contains('name', 'editor')) {
             return true;
         }
         return false;

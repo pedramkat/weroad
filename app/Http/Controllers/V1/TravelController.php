@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\TravelRequest;
 use App\Http\Resources\TravelResource;
 use App\Models\Travel;
 use Exception;
@@ -10,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
-class TravelControllerV1 extends Controller
+class TravelController extends Controller
 {
     /**
      * @OA\Get(
@@ -64,7 +65,7 @@ class TravelControllerV1 extends Controller
     public function index()
     {
         // Using eloquent
-        $travels = Travel::where('isPublic', true)->paginate(5);
+        $travels = Travel::where('isPublic', true)->paginate(config('weroad.perPage'));
         return TravelResource::collection($travels);
     }
 
@@ -74,8 +75,14 @@ class TravelControllerV1 extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TravelRequest $request)
     {
+
+        $travel = Travel::create($request->validated());
+
+        return new TravelResource($travel);
+
+
         // Auth::user();
         try {
             $request->validate([
