@@ -18,9 +18,9 @@ class TourFactory extends Factory
     {
         return [
             'name' => fake()->text(20),
-            'startingDate' => now()->addDays(rand(1,10)),
-            'endingDate' => now()->addDays(rand(11,20)),
-            'price' => fake()->randomFloat(2, 1000, 2999)
+            'startingDate' => now()->addDays(rand(1, 10)),
+            'endingDate' => now()->addDays(rand(11, 20)),
+            'price' => fake()->randomFloat(2, 1000, 2999),
         ];
     }
 }

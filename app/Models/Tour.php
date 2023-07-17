@@ -35,13 +35,11 @@ class Tour extends Model
     protected $casts = [
         'startingDate' => 'date:Y-m-d',
         'endingDate' => 'date:Y-m-d',
-        'price' => 'integer'
+        'price' => 'integer',
     ];
 
     /**
      * The belongs to relation with Travel model.
-     *
-     * @return BelongsTo
      */
     public function travel(): BelongsTo
     {
@@ -50,8 +48,6 @@ class Tour extends Model
 
     /**
      * Get the price.
-     *
-     * @return Attribute
      */
     protected function price(): Attribute
     {

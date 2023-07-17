@@ -17,6 +17,7 @@ use Illuminate\Routing\Controller as BaseController;
  *      },
  *      title="WEROAD",
  *      description="Api documentation",
+ *
  *      @OA\Contact(
  *          email="peramkat@gmail.com"
  *      ),
@@ -36,7 +37,7 @@ class Controller extends BaseController
     {
         $response = [
             'success' => true,
-            'data'    => $result,
+            'data' => $result,
             'message' => $message,
         ];
 
@@ -55,7 +56,7 @@ class Controller extends BaseController
             'message' => $error,
         ];
 
-        if (!empty($errorMessages)) {
+        if (! empty($errorMessages)) {
             $response['data'] = $errorMessages;
         }
 

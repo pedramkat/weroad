@@ -23,15 +23,15 @@ class UpdateTravelRequest extends FormRequest
     {
         return [
             'isPublic' => 'boolean',
-            'name' => ['nullable','unique:travels','string'],
-            'slug' => ['nullable','unique:travels','regex:/^[a-z0-9\-]+$/'],
-            'description' => ['nullable','string'],
-            'numberOfDays' => ['nullable','integer'],
-            'nature' => ['nullable','integer'] ,
-            'relax' => ['nullable','integer'],
-            'history' => ['nullable','integer'],
-            'culture' => ['nullable','integer'],
-            'party' => ['nullable','integer']
+            'name' => ['nullable', 'unique:travels', 'string'],
+            'slug' => ['nullable', 'unique:travels', 'regex:/^[a-z0-9\-]+$/'],
+            'description' => ['nullable', 'string'],
+            'numberOfDays' => ['nullable', 'integer'],
+            'nature' => ['nullable', 'integer'],
+            'relax' => ['nullable', 'integer'],
+            'history' => ['nullable', 'integer'],
+            'culture' => ['nullable', 'integer'],
+            'party' => ['nullable', 'integer'],
         ];
     }
 }

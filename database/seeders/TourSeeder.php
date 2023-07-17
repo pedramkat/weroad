@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Tour;
 use App\Models\Travel;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class TourSeeder extends Seeder
@@ -16,7 +15,7 @@ class TourSeeder extends Seeder
     {
         Tour::truncate();
 
-        $jsonTours = json_decode(file_get_contents(base_path("storage/app/seeder/tours.json")), true);
+        $jsonTours = json_decode(file_get_contents(base_path('storage/app/seeder/tours.json')), true);
 
         foreach ($jsonTours as $tour) {
             Tour::create([
@@ -25,7 +24,7 @@ class TourSeeder extends Seeder
                 'startingDate' => $tour['startingDate'],
                 'endingDate' => $tour['endingDate'],
                 'price' => $tour['price'],
-                'travelId' => Travel::where('id', $tour['travelId'])->first()->id
+                'travelId' => Travel::where('id', $tour['travelId'])->first()->id,
             ]);
         }
     }

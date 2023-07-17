@@ -4,16 +4,15 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use Illuminate\Contracts\Auth\CanResetPassword;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Nova\Auth\Impersonatable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Contracts\Auth\CanResetPassword;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
 {
@@ -32,7 +31,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         'name',
         'email',
         'password',
-        'role_id'
+        'role_id',
     ];
 
     /**
@@ -57,8 +56,6 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
 
     /**
      * The belongs to relation with Role model.
-     *
-     * @return BelongsToMany
      */
     public function roles(): BelongsToMany
     {
@@ -72,9 +69,10 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
      */
     public function canImpersonate()
     {
-        if(auth()->user()->roles->contains('name', 'admin')) {
+        if (auth()->user()->roles->contains('name', 'admin')) {
             return true;
         }
+
         return false;
     }
 
@@ -85,9 +83,10 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
      */
     public function canBeImpersonated()
     {
-        if($this->roles->contains('name', 'editor')) {
+        if ($this->roles->contains('name', 'editor')) {
             return true;
         }
+
         return false;
     }
 }

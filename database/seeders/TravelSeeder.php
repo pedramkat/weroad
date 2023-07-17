@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Travel;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class TravelSeeder extends Seeder
@@ -15,11 +14,11 @@ class TravelSeeder extends Seeder
     {
         Travel::truncate();
 
-        $jsonTravels = json_decode(file_get_contents(base_path("storage/app/seeder/travels.json")), true);
+        $jsonTravels = json_decode(file_get_contents(base_path('storage/app/seeder/travels.json')), true);
 
         foreach ($jsonTravels as $travel) {
             $params = [];
-            if (array_key_exists('moods', $travel) && !empty($travel['moods'])) {
+            if (array_key_exists('moods', $travel) && ! empty($travel['moods'])) {
                 $params = $travel['moods'];
             }
             Travel::updateOrCreate([

@@ -23,15 +23,15 @@ class StoreTravelRequest extends FormRequest
     {
         return [
             'isPublic' => 'boolean',
-            'name' => ['required','unique:travels'],
-            'slug' => ['required','unique:travels','regex:/^[a-z0-9\-]+$/'],
+            'name' => ['required', 'unique:travels'],
+            'slug' => ['required', 'unique:travels', 'regex:/^[a-z0-9\-]+$/'],
             'description' => ['required'],
-            'numberOfDays' => ['required','integer'],
-            'nature' => ['required','integer'] ,
-            'relax' => ['required','integer'],
-            'history' => ['required','integer'],
-            'culture' => ['required','integer'],
-            'party' => ['required','integer']
+            'numberOfDays' => ['required', 'integer'],
+            'nature' => ['required', 'integer'],
+            'relax' => ['required', 'integer'],
+            'history' => ['required', 'integer'],
+            'culture' => ['required', 'integer'],
+            'party' => ['required', 'integer'],
         ];
     }
 }

@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Role;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class RoleSeeder extends Seeder
@@ -15,7 +14,7 @@ class RoleSeeder extends Seeder
     {
         Role::truncate();
 
-        $jsonRoles = json_decode(file_get_contents(base_path("storage/app/seeder/roles.json")), true);
+        $jsonRoles = json_decode(file_get_contents(base_path('storage/app/seeder/roles.json')), true);
 
         foreach ($jsonRoles as $role) {
             Role::create([

@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
-use Exception;
 
 class LoginController extends Controller
 {
@@ -16,11 +15,15 @@ class LoginController extends Controller
      *     summary="User login",
      *     description="Authenticate user and generate a bearer token",
      *     tags={"Authentication"},
+     *
      *     @OA\RequestBody(
      *         required=true,
+     *
      *         @OA\MediaType(
      *             mediaType="application/json",
+     *
      *             @OA\Schema(
+     *
      *                 @OA\Property(
      *                     property="email",
      *                     description="User's email",
@@ -36,12 +39,16 @@ class LoginController extends Controller
      *             )
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Successful login",
+     *
      *         @OA\MediaType(
      *             mediaType="application/json",
+     *
      *             @OA\Schema(
+     *
      *                 @OA\Property(
      *                     property="token",
      *                     description="Bearer token for authentication",
@@ -69,12 +76,16 @@ class LoginController extends Controller
      *             )
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=401,
      *         description="Unauthorized",
+     *
      *         @OA\MediaType(
      *             mediaType="application/json",
+     *
      *             @OA\Schema(
+     *
      *                 @OA\Property(
      *                     property="success",
      *                     description="Error status",
@@ -96,25 +107,25 @@ class LoginController extends Controller
     {
         try {
             $request->validate([
-                'email' => ['required','string','email'],
-                'password' => ['required','string']
+                'email' => ['required', 'string', 'email'],
+                'password' => ['required', 'string'],
             ]);
 
             if (Auth::attempt($request->only('email', 'password'))) {
                 $user = Auth::user();
-                $success['token'] =  $user->createToken('access_token')->plainTextToken;
-                $success['name'] =  $user->name;
-                $success['role'] =  $user->roles->pluck('name')->toArray();
-                $success['email_verified_at'] =  $user->email_verified_at;
+                $success['token'] = $user->createToken('access_token')->plainTextToken;
+                $success['name'] = $user->name;
+                $success['role'] = $user->roles->pluck('name')->toArray();
+                $success['email_verified_at'] = $user->email_verified_at;
 
                 return $this->sendResponse($success, 'User login successfully.');
             }
 
             throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.']
+                'email' => ['The provided credentials are incorrect.'],
             ]);
         } catch (Exception $e) {
-            return $this->sendError($e->getMessage(),422);
+            return $this->sendError($e->getMessage(), 422);
         }
     }
 
@@ -126,10 +137,13 @@ class LoginController extends Controller
      *     operationId="logout",
      *     tags={"Authentication"},
      *     security={{"sanctum":{}}},
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Successful logout",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(
      *                 property="message",
      *                 type="string",
@@ -137,10 +151,13 @@ class LoginController extends Controller
      *             )
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=401,
      *         description="Unauthenticated",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(
      *                 property="message",
      *                 type="string",

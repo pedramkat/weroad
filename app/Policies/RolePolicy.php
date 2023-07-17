@@ -4,14 +4,12 @@ namespace App\Policies;
 
 use App\Models\Role;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class RolePolicy
 {
     /**
      * Only Admin can access to Roles
      *
-     * @param User $user
      * @return bool
      */
     public function before(User $user)

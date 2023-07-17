@@ -2,13 +2,12 @@
 
 namespace App\Nova;
 
-use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Tour extends Resource
@@ -33,13 +32,12 @@ class Tour extends Resource
      * @var array<int,string>
      */
     public static $search = [
-        'name','travel.name'
+        'name', 'travel.name',
     ];
 
     /**
      * Get the fields displayed by the resource.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array<int,mixed>
      */
     public function fields(NovaRequest $request)
@@ -72,14 +70,13 @@ class Tour extends Resource
                 ->currency('EUR'),
 
             BelongsTo::make('Travel', 'travel', 'App\Nova\Travel')
-            ->searchable(),
+                ->searchable(),
         ];
     }
 
     /**
      * Get the cards available for the request.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array<int,mixed>
      */
     public function cards(NovaRequest $request)
@@ -90,7 +87,6 @@ class Tour extends Resource
     /**
      * Get the filters available for the resource.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array<int,mixed>
      */
     public function filters(NovaRequest $request)
@@ -101,7 +97,6 @@ class Tour extends Resource
     /**
      * Get the lenses available for the resource.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array<int,mixed>
      */
     public function lenses(NovaRequest $request)
@@ -112,7 +107,6 @@ class Tour extends Resource
     /**
      * Get the actions available for the resource.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array<int,mixed>
      */
     public function actions(NovaRequest $request)

@@ -204,7 +204,7 @@ return [
                  * Examples of Securities
                 */
                 [
-                    'bearerAuth' => []
+                    'bearerAuth' => [],
                     /*
                     'oauth2_security_example' => [
                         'read',

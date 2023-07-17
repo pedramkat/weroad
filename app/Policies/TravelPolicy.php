@@ -4,14 +4,12 @@ namespace App\Policies;
 
 use App\Models\Travel;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class TravelPolicy
 {
     /**
      * Only Admin can access to Travels
      *
-     * @param User $user
      * @return bool
      */
     public function before(User $user)

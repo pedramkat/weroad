@@ -2,7 +2,6 @@
 
 namespace App\Nova;
 
-use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
@@ -32,13 +31,12 @@ class Travel extends Resource
      * @var array<int,string>
      */
     public static $search = [
-        'name','slug'
+        'name', 'slug',
     ];
 
     /**
      * Get the fields displayed by the resource.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array<int,mixed>
      */
     public function fields(NovaRequest $request)
@@ -77,7 +75,6 @@ class Travel extends Resource
     /**
      * Get the cards available for the request.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array<int,mixed>
      */
     public function cards(NovaRequest $request)
@@ -88,7 +85,6 @@ class Travel extends Resource
     /**
      * Get the filters available for the resource.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array<int,mixed>
      */
     public function filters(NovaRequest $request)
@@ -99,7 +95,6 @@ class Travel extends Resource
     /**
      * Get the lenses available for the resource.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array<int,mixed>
      */
     public function lenses(NovaRequest $request)
@@ -110,7 +105,6 @@ class Travel extends Resource
     /**
      * Get the actions available for the resource.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array<int,mixed>
      */
     public function actions(NovaRequest $request)

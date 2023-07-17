@@ -3,14 +3,12 @@
 namespace App\Policies;
 
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class UserPolicy
 {
     /**
      * Only Admin can access to Users
      *
-     * @param User $user
      * @return bool
      */
     public function before(User $user)

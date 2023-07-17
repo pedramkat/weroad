@@ -12,7 +12,7 @@ class checkRole
      * Handle an incoming request.
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     * @param array<int,string> $roles
+     * @param  array<int,string>  $roles
      */
     public function handle(Request $request, Closure $next, ...$roles): Response
     {
@@ -21,6 +21,7 @@ class checkRole
         if (! $user || ! in_array($roles[0], $user->roles()->pluck('name')->toArray())) {
             abort(403, 'Unauthorized');
         }
+
         return $next($request);
     }
 }

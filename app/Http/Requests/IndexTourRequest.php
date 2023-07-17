@@ -28,14 +28,12 @@ class IndexTourRequest extends FormRequest
             'dateFrom' => 'date',
             'dateTo' => 'date',
             'sortBy' => Rule::in(['price']),
-            'sortOrder' => Rule::in(['asc','desc']),
+            'sortOrder' => Rule::in(['asc', 'desc']),
         ];
     }
-    
+
     /**
      * Get the messages that apply to the error response.
-     *
-     * @return array
      */
     public function messages(): array
     {
