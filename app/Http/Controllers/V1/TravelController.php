@@ -67,8 +67,7 @@ class TravelController extends Controller
      *
      * Give a paginated list of public travels.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index()
     {
@@ -104,11 +103,8 @@ class TravelController extends Controller
      *     )
      * )
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
-    public function store(StoreTravelRequest $request)
+    public function store(StoreTravelRequest $request): TravelResource
     {
         $travel = Travel::create($request->validated());
 
@@ -154,11 +150,8 @@ class TravelController extends Controller
      * )
      *
      * Updates a an existing travel in storage.
-     *
-     * @param  \Illuminate\Http\Requests\UpdateTravelRequest  $request
-     * @return \Illuminate\Http\Response
      */
-    public function update(Travel $travel, UpdateTravelRequest $request)
+    public function update(Travel $travel, UpdateTravelRequest $request): TravelResource
     {
         $travel->update($request->validated());
 

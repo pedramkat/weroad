@@ -102,6 +102,10 @@ class LoginController extends Controller
      *         )
      *     )
      * )
+     *
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function login(Request $request)
     {
@@ -125,7 +129,7 @@ class LoginController extends Controller
                 'email' => ['The provided credentials are incorrect.'],
             ]);
         } catch (Exception $e) {
-            return $this->sendError($e->getMessage(), 422);
+            return $this->sendError($e->getMessage(), [], 422);
         }
     }
 
@@ -166,6 +170,8 @@ class LoginController extends Controller
      *         )
      *     )
      * )
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
     public function logout()
     {

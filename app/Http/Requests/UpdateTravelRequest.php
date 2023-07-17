@@ -17,12 +17,12 @@ class UpdateTravelRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
+     * @return non-empty-array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
     public function rules(): array
     {
         return [
-            'isPublic' => 'boolean',
+            'isPublic' => ['boolean'],
             'name' => ['nullable', 'unique:travels', 'string'],
             'slug' => ['nullable', 'unique:travels', 'regex:/^[a-z0-9\-]+$/'],
             'description' => ['nullable', 'string'],

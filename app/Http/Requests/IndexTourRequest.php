@@ -18,7 +18,7 @@ class IndexTourRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
+     * @return non-empty-array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
     public function rules(): array
     {
@@ -34,6 +34,8 @@ class IndexTourRequest extends FormRequest
 
     /**
      * Get the messages that apply to the error response.
+     *
+     * @return non-empty-array<string, string>
      */
     public function messages(): array
     {

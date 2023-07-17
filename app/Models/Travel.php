@@ -41,7 +41,7 @@ class Travel extends Model
     /**
      * The accessors to append to the model's array form.
      *
-     * @var array
+     * @var array<string>
      */
     protected $appends = ['numberOfNights'];
 

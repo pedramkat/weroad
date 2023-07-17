@@ -31,9 +31,9 @@ class Controller extends BaseController
     /**
      * success response method.
      *
-     * @return \Illuminate\Http\Response
+     * @param  array<mixed>  $result
      */
-    public function sendResponse($result, $message): JsonResponse
+    public function sendResponse(array $result, string $message): JsonResponse
     {
         $response = [
             'success' => true,
@@ -47,7 +47,9 @@ class Controller extends BaseController
     /**
      * return error response.
      *
-     * @return \Illuminate\Http\Response
+     * @param  mixed  $error
+     * @param  mixed  $errorMessages
+     * @param  int  $code
      */
     public function sendError($error, $errorMessages = [], $code = 400): JsonResponse
     {

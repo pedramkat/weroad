@@ -103,8 +103,7 @@ class TourController extends Controller
      *
      * Give a paginated list of the Tours of the specified Travel.
      *
-     * @param  \Illuminate\Http\Requests\IndexTourRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index(Travel $travel, IndexTourRequest $request)
     {
@@ -169,8 +168,7 @@ class TourController extends Controller
      *
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return TourResource
      */
     public function store(Travel $travel, StoreTourRequest $request): object
     {
