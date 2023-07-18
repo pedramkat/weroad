@@ -3,47 +3,50 @@
 This project is a test subject for Weroad interview.
 
 This project achieves these goals:
+- Full backend editorial platform (based on NOVA) with login for Admins and Editors to manipulate resources.
+- Well documented (SWAGGER) APIs with authentications with CRUD (without DELETE) functionality.
+- Automated installation with bash commands.
+- Well organazied code with Laravel Pint.
+- Stable code with Larastan.
 
-## Learning Laravel
+## Requirements
+- php@8.1
+- Postgres 14.5
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Installation
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+create bash command to install and initiate the project
+- creare database weroad
+- creare database weroad_test
+- cp .env.example to .env
+- composer install
+- php artisan migrate
+update .env with db username
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+php artisan l5-swagger:generate 
+./vendor/bin/phpstan analyse
+./vendor/bin/pint --test
 
-## Laravel Sponsors
+php artisan migrate:fresh --env=testing
+php artisan test
+php artisan migrate:fresh --seed  
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+copy the postman export file in project
+## Usage
+Backend login:
+https://127.0.0.1:8000
 
-### Premium Partners
+Admin login:
+Email: admin@weroad.com
+Password: admin
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+Editor login:
+Email: editor@weroad.com
+Password: editor
 
-## Contributing
+## API Documentation
+https://127.0.0.1:8000/api/documentation
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
+### License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
