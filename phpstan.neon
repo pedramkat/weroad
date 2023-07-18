@@ -17,3 +17,6 @@ parameters:
 #
 #    checkMissingIterableValueType: false
     checkGenericClassInNonGenericObjectType: false
+    automaticallyRemoveInferableTypes: false
+services:
+    factory: PhpStan\Parser\ParserFactory::create(['skipPhpDoc' => true])
