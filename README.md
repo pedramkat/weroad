@@ -15,27 +15,37 @@ This project achieves these goals:
 
 ## Installation
 
-create bash command to install and initiate the project
-- creare database weroad
-- creare database weroad_test
-- cp .env.example to .env
-- composer install
-- php artisan migrate
-update .env with db username
+1. Clone the project with:
+    - `git clone  https://github.com/pedramkat/weroad.git`
+2. Go to the root directory of the Weroad project
+    - `cd weroad`
+3. Create two databases in PostgreSQL
+    Connect to the database `psql`, then:
+    - `create database weroad`
+    - `create database weroad_test`
+    Alternativly:
+    - `psql -c "CREATE DATABASE weroad`
+    - `psql -c "CREATE DATABASE weroad_test`
+4. Copy the Username and Password in the .env.example of the project
+    - DB_USERNAME={username}
+    - DB_PASSWORD={password}
+5. Lunch the deploy command
+    - `bash scripts/deploy_local.sh`
 
-php artisan l5-swagger:generate 
-./vendor/bin/phpstan analyse
-./vendor/bin/pint --test
+**Lunch the test**
+`php artisan test`
 
-php artisan migrate:fresh --seed  
-php artisan config:clear
-php artisan cache:clear
-php artisan test
+**Lunch the phpstan**
+`./vendor/bin/phpstan analyse`
 
-copy the postman export file in project
+**Lunch the php cs fixer test**
+`./vendor/bin/pint --test`
+
+## API documentation
+http://127.0.0.1:8000/api/documentation
 ## Usage
 Backend login:
-https://127.0.0.1:8000
+http://127.0.0.1:8000
 
 Admin login:
 Email: admin@weroad.com
@@ -44,9 +54,6 @@ Password: admin
 Editor login:
 Email: editor@weroad.com
 Password: editor
-
-## API Documentation
-https://127.0.0.1:8000/api/documentation
 
 ### License
 
