@@ -24,32 +24,37 @@ use Illuminate\Routing\Controller as BaseController;
  * )
  *
  *    @OA\Header(
-*     header="Accept",
-*     description="The content type the client is willing to accept in the response",
-*     @OA\Schema(
-*         type="string",
-*         default="application/json",
-*         example="application/json"
-*     )
-* )
-* @OA\Header(
-*     header="Content-Type",
-*     description="The content type of the request body",
-*     @OA\Schema(
-*         type="string",
-*         default="application/vnd.api+json",
-*         example="application/vnd.api+json"
-*     )
-* )
-* @OA\Header(
-*     header="Cache-Control",
-*     description="Specify 'no-store' to ensure responses are not cached",
-*     @OA\Schema(
-*         type="string",
-*         default="no-store",
-*         example="no-store"
-*     )
-* )
+ *     header="Accept",
+ *     description="The content type the client is willing to accept in the response",
+ *
+ *     @OA\Schema(
+ *         type="string",
+ *         default="application/json",
+ *         example="application/json"
+ *     )
+ * )
+ *
+ * @OA\Header(
+ *     header="Content-Type",
+ *     description="The content type of the request body",
+ *
+ *     @OA\Schema(
+ *         type="string",
+ *         default="application/vnd.api+json",
+ *         example="application/vnd.api+json"
+ *     )
+ * )
+ *
+ * @OA\Header(
+ *     header="Cache-Control",
+ *     description="Specify 'no-store' to ensure responses are not cached",
+ *
+ *     @OA\Schema(
+ *         type="string",
+ *         default="no-store",
+ *         example="no-store"
+ *     )
+ * )
  */
 class Controller extends BaseController
 {

@@ -23,7 +23,7 @@ class TourSeeder extends Seeder
                 'name' => $tour['name'],
                 'startingDate' => $tour['startingDate'],
                 'endingDate' => $tour['endingDate'],
-                'price' => $tour['price']/100,
+                'price' => $tour['price'] / 100,
                 'travelId' => Travel::where('id', $tour['travelId'])->first()->id,
             ]);
         }

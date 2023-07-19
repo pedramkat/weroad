@@ -22,7 +22,6 @@ class TravelController extends Controller
      *         response=200,
      *         description="Successful operation",
      *     ),
-     *
      *     @OA\Response(
      *         response=401,
      *         description="Unauthorized",
@@ -37,9 +36,6 @@ class TravelController extends Controller
      *         )
      *     )
      * )
-     *
-     *
-     * Give a paginated list of public travels.
      *
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
@@ -58,37 +54,44 @@ class TravelController extends Controller
      *     tags={"Api v1 - Travels"},
      *     security={{ "sanctum": {} }},
      *
-    *     @OA\RequestBody(
-    *         required=true,
-    *         description="Travel details",
-    *         @OA\MediaType(
-    *             mediaType="application/x-www-form-urlencoded",
-    *             @OA\Schema(
-    *                 @OA\Property(property="isPublic", type="int", example="1"),
-    *                 @OA\Property(property="name", type="string", example="new travel"),
-    *                 @OA\Property(property="slug", type="string", example="new-travel"),
-    *                 @OA\Property(property="description", type="string", example="content of the first travel"),
-    *                 @OA\Property(property="numberOfDays", type="integer", example="10"),
-    *                 @OA\Property(property="nature", type="integer", example="20"),
-    *                 @OA\Property(property="relax", type="integer", example="30"),
-    *                 @OA\Property(property="history", type="integer", example="40"),
-    *                 @OA\Property(property="culture", type="integer", example="50"),
-    *                 @OA\Property(property="party", type="integer", example="60"),
-    *             )
-    *         )
-    *     ),
-    *
-    *     @OA\Response(
-    *         response=200,
-    *         description="Travel created successfully",
-    *         @OA\MediaType(
-    *             mediaType="application/json",
-    *             @OA\Schema(
-    *                 type="object",
-    *                 @OA\Property(property="message", type="string", example="Travel created successfully"),
-    *             )
-    *         )
-    *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Travel details",
+     *
+     *         @OA\MediaType(
+     *             mediaType="application/x-www-form-urlencoded",
+     *
+     *             @OA\Schema(
+     *
+     *                 @OA\Property(property="isPublic", type="int", example="1"),
+     *                 @OA\Property(property="name", type="string", example="new travel"),
+     *                 @OA\Property(property="slug", type="string", example="new-travel"),
+     *                 @OA\Property(property="description", type="string", example="content of the first travel"),
+     *                 @OA\Property(property="numberOfDays", type="integer", example="10"),
+     *                 @OA\Property(property="nature", type="integer", example="20"),
+     *                 @OA\Property(property="relax", type="integer", example="30"),
+     *                 @OA\Property(property="history", type="integer", example="40"),
+     *                 @OA\Property(property="culture", type="integer", example="50"),
+     *                 @OA\Property(property="party", type="integer", example="60"),
+     *             )
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Travel created successfully",
+     *
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *
+     *             @OA\Schema(
+     *                 type="object",
+     *
+     *                 @OA\Property(property="message", type="string", example="Travel created successfully"),
+     *             )
+     *         )
+     *     ),
+     *
      *     @OA\Response(
      *         response=422,
      *         description="Validation error",
@@ -96,8 +99,6 @@ class TravelController extends Controller
      * )
      *
      * Store a newly created resource in storage.
-     *
-     * @return TravelResource
      */
     public function store(StoreTravelRequest $request): TravelResource
     {
@@ -127,32 +128,39 @@ class TravelController extends Controller
      *         )
      *     ),
      *
-    *     @OA\RequestBody(
-    *         required=true,
-    *         description="Travel details",
-    *         @OA\MediaType(
-    *             mediaType="application/x-www-form-urlencoded",
-    *             @OA\Schema(
-    *                 required={"isPublic", "name", "numberOfDays", "description"},
-    *                 @OA\Property(property="isPublic", type="integer", format="int32", example="1"),
-    *                 @OA\Property(property="name", type="string", example="new united arab emirates"),
-    *                 @OA\Property(property="numberOfDays", type="integer", format="int32", example="5"),
-    *                 @OA\Property(property="description", type="string", example="new content"),
-    *             )
-    *         )
-    *     ),
-    *
-    *     @OA\Response(
-    *         response=200,
-    *         description="Travel updated successfully",
-    *         @OA\MediaType(
-    *             mediaType="application/json",
-    *             @OA\Schema(
-    *                 type="object",
-    *                 @OA\Property(property="message", type="string", example="Travel updated successfully"),
-    *             )
-    *         )
-    *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Travel details",
+     *
+     *         @OA\MediaType(
+     *             mediaType="application/x-www-form-urlencoded",
+     *
+     *             @OA\Schema(
+     *                 required={"isPublic", "name", "numberOfDays", "description"},
+     *
+     *                 @OA\Property(property="isPublic", type="integer", format="int32", example="1"),
+     *                 @OA\Property(property="name", type="string", example="new united arab emirates"),
+     *                 @OA\Property(property="numberOfDays", type="integer", format="int32", example="5"),
+     *                 @OA\Property(property="description", type="string", example="new content"),
+     *             )
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Travel updated successfully",
+     *
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *
+     *             @OA\Schema(
+     *                 type="object",
+     *
+     *                 @OA\Property(property="message", type="string", example="Travel updated successfully"),
+     *             )
+     *         )
+     *     ),
+     *
      *     @OA\Response(
      *         response=422,
      *         description="Validation error",

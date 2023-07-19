@@ -24,7 +24,6 @@ class TourController extends Controller
      *         required=true,
      *         example="jordan-360",
      *
-     *
      *         @OA\Schema(
      *             type="string"
      *         )
@@ -77,7 +76,6 @@ class TourController extends Controller
      *         in="query",
      *         description="Field to sort the tours by",
      *         example="price",
-     *
      *
      *         @OA\Schema(
      *             type="string"
@@ -158,9 +156,12 @@ class TourController extends Controller
      *     @OA\RequestBody(
      *         required=true,
      *         description="Tour details",
+     *
      *         @OA\MediaType(
      *             mediaType="application/x-www-form-urlencoded",
+     *
      *             @OA\Schema(
+     *
      *                 @OA\Property(property="name", type="string", example="new tour"),
      *                 @OA\Property(property="startingDate", type="string", format="date", example="2023-10-01"),
      *                 @OA\Property(property="endingDate", type="string", format="date", example="2023-10-10"),
