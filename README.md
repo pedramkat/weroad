@@ -27,10 +27,10 @@ php artisan l5-swagger:generate
 ./vendor/bin/phpstan analyse
 ./vendor/bin/pint --test
 
-php artisan migrate:fresh --env=testing
-php artisan config:cache
-php artisan test
 php artisan migrate:fresh --seed  
+php artisan config:clear
+php artisan cache:clear
+php artisan test
 
 copy the postman export file in project
 ## Usage

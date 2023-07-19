@@ -159,13 +159,14 @@
                 "operationId": "a1084137b606dfdde9b1efe97ee047d1",
                 "parameters": [
                     {
-                        "name": "travel",
+                        "name": "travel:slug",
                         "in": "path",
                         "description": "Slug of the travel to retrieve tours for",
                         "required": true,
                         "schema": {
                             "type": "string"
-                        }
+                        },
+                        "example": "jordan-360"
                     },
                     {
                         "name": "priceFrom",
@@ -207,7 +208,8 @@
                         "description": "Field to sort the tours by",
                         "schema": {
                             "type": "string"
-                        }
+                        },
+                        "example": "price"
                     },
                     {
                         "name": "sortOrder",
@@ -219,7 +221,8 @@
                                 "asc",
                                 "desc"
                             ]
-                        }
+                        },
+                        "example": "desc"
                     }
                 ],
                 "responses": {
@@ -242,19 +245,46 @@
                 "operationId": "5814af6430b23edaa8bcdfdba62bf1ea",
                 "parameters": [
                     {
-                        "name": "travel",
+                        "name": "travel:slug",
                         "in": "path",
                         "description": "Slug of the travel to associate the tour with",
                         "required": true,
                         "schema": {
-                            "type": "string"
-                        }
+                            "type": "string",
+                            "format": "varchar"
+                        },
+                        "example": "jordan-360"
                     }
                 ],
                 "requestBody": {
+                    "description": "Tour details",
                     "required": true,
                     "content": {
-                        "application/json": {}
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "new tour"
+                                    },
+                                    "startingDate": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2023-10-01"
+                                    },
+                                    "endingDate": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2023-10-10"
+                                    },
+                                    "price": {
+                                        "type": "string",
+                                        "example": "2345"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
                     }
                 },
                 "responses": {
@@ -282,17 +312,7 @@
                 "operationId": "bfe3c61041966f70bfcafc8019bd7fd4",
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Travel"
-                                    }
-                                }
-                            }
-                        }
+                        "description": "Successful operation"
                     },
                     "401": {
                         "description": "Unauthorized",
@@ -316,23 +336,85 @@
                         "sanctum": []
                     }
                 ]
-            },
+            }
+        },
+        "/api/v1/travel": {
             "post": {
                 "tags": [
                     "Api v1 - Travels"
                 ],
                 "summary": "Create a new travel",
                 "description": "Store a newly created travel in the database",
-                "operationId": "d0fcc48b850cfec0e0b841d132b924fa",
+                "operationId": "b9effdf8c24f61ad7f0b77849f110828",
                 "requestBody": {
+                    "description": "Travel details",
                     "required": true,
                     "content": {
-                        "application/json": {}
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "properties": {
+                                    "isPublic": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "new travel"
+                                    },
+                                    "slug": {
+                                        "type": "string",
+                                        "example": "new-travel"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "content of the first travel"
+                                    },
+                                    "numberOfDays": {
+                                        "type": "integer",
+                                        "example": "10"
+                                    },
+                                    "nature": {
+                                        "type": "integer",
+                                        "example": "20"
+                                    },
+                                    "relax": {
+                                        "type": "integer",
+                                        "example": "30"
+                                    },
+                                    "history": {
+                                        "type": "integer",
+                                        "example": "40"
+                                    },
+                                    "culture": {
+                                        "type": "integer",
+                                        "example": "50"
+                                    },
+                                    "party": {
+                                        "type": "integer",
+                                        "example": "60"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
                     }
                 },
                 "responses": {
                     "200": {
-                        "description": "Travel created successfully"
+                        "description": "Travel created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Travel created successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "422": {
                         "description": "Validation error"
@@ -355,25 +437,70 @@
                 "operationId": "19f184c137c5db272277078b85da4a36",
                 "parameters": [
                     {
-                        "name": "travel",
+                        "name": "travel:slug",
                         "in": "path",
-                        "description": "ID of the travel to update",
+                        "description": "slug of the travel to update",
                         "required": true,
                         "schema": {
-                            "type": "integer",
-                            "format": "int64"
-                        }
+                            "type": "string",
+                            "format": "varchar"
+                        },
+                        "example": "united-arab-emirates"
                     }
                 ],
                 "requestBody": {
+                    "description": "Travel details",
                     "required": true,
                     "content": {
-                        "application/json": {}
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "required": [
+                                    "isPublic",
+                                    "name",
+                                    "numberOfDays",
+                                    "description"
+                                ],
+                                "properties": {
+                                    "isPublic": {
+                                        "type": "integer",
+                                        "format": "int32",
+                                        "example": "1"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "new united arab emirates"
+                                    },
+                                    "numberOfDays": {
+                                        "type": "integer",
+                                        "format": "int32",
+                                        "example": "5"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "new content"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
                     }
                 },
                 "responses": {
                     "200": {
-                        "description": "Travel updated successfully"
+                        "description": "Travel updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Travel updated successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "422": {
                         "description": "Validation error"
@@ -388,24 +515,30 @@
         }
     },
     "components": {
-        "schemas": {
-            "Travel": {
-                "title": "Travel",
-                "properties": {
-                    "id": {
-                        "description": "Travel ID",
-                        "type": "integer"
-                    },
-                    "name": {
-                        "description": "Travel name",
-                        "type": "string"
-                    },
-                    "destination": {
-                        "description": "Travel destination",
-                        "type": "string"
-                    }
-                },
-                "type": "object"
+        "headers": {
+            "Accept": {
+                "description": "The content type the client is willing to accept in the response",
+                "schema": {
+                    "type": "string",
+                    "default": "application/json",
+                    "example": "application/json"
+                }
+            },
+            "Content-Type": {
+                "description": "The content type of the request body",
+                "schema": {
+                    "type": "string",
+                    "default": "application/vnd.api+json",
+                    "example": "application/vnd.api+json"
+                }
+            },
+            "Cache-Control": {
+                "description": "Specify 'no-store' to ensure responses are not cached",
+                "schema": {
+                    "type": "string",
+                    "default": "no-store",
+                    "example": "no-store"
+                }
             }
         },
         "securitySchemes": {

@@ -61,7 +61,7 @@ class TravelUpdateTest extends TestCase
         ]);
         $response->assertStatus(200);
 
-        $response = $this->get('/api/v1/travels');
+        $response = $this->getJson('/api/v1/travels');
         $response->assertJsonFragment(['name' => 'new updated name']);
     }
 }

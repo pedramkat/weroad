@@ -18,10 +18,12 @@ class TourController extends Controller
      *     tags={"Api v1 - Tours"},
      *
      *     @OA\Parameter(
-     *         name="travel",
+     *         name="travel:slug",
      *         in="path",
      *         description="Slug of the travel to retrieve tours for",
      *         required=true,
+     *         example="jordan-360",
+     *
      *
      *         @OA\Schema(
      *             type="string"
@@ -74,6 +76,8 @@ class TourController extends Controller
      *         name="sortBy",
      *         in="query",
      *         description="Field to sort the tours by",
+     *         example="price",
+     *
      *
      *         @OA\Schema(
      *             type="string"
@@ -84,6 +88,7 @@ class TourController extends Controller
      *         name="sortOrder",
      *         in="query",
      *         description="Sorting order ('asc' or 'desc')",
+     *         example="desc",
      *
      *         @OA\Schema(
      *             type="string",
@@ -130,7 +135,7 @@ class TourController extends Controller
     }
 
     /**
-     *  * @OA\Post(
+     *  @OA\Post(
      *     path="/api/v1/travels/{travel:slug}/tour",
      *     summary="Create a new tour for a travel",
      *     description="Store a newly created tour for a specific travel in the database",
@@ -138,21 +143,29 @@ class TourController extends Controller
      *     security={{ "sanctum": {} }},
      *
      *     @OA\Parameter(
-     *         name="travel",
+     *         name="travel:slug",
      *         in="path",
      *         description="Slug of the travel to associate the tour with",
      *         required=true,
+     *         example="jordan-360",
      *
      *         @OA\Schema(
-     *             type="string"
+     *             type="string",
+     *             format="varchar",
      *         )
      *     ),
      *
      *     @OA\RequestBody(
      *         required=true,
-     *
+     *         description="Tour details",
      *         @OA\MediaType(
-     *             mediaType="application/json",
+     *             mediaType="application/x-www-form-urlencoded",
+     *             @OA\Schema(
+     *                 @OA\Property(property="name", type="string", example="new tour"),
+     *                 @OA\Property(property="startingDate", type="string", format="date", example="2023-10-01"),
+     *                 @OA\Property(property="endingDate", type="string", format="date", example="2023-10-10"),
+     *                 @OA\Property(property="price", type="string", example="2345"),
+     *             )
      *         )
      *     ),
      *
@@ -165,7 +178,6 @@ class TourController extends Controller
      *         description="Validation error",
      *     )
      * )
-     *
      * Store a newly created resource in storage.
      *
      * @return TourResource
