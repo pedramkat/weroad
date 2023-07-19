@@ -1,6 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\V1\TourController;
+use App\Http\Controllers\V1\TravelController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +16,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth:sanctum');
+
+Route::name('api.')->prefix('v1')->group(function () {
+
+    Route::get('/travels', [TravelController::class, 'index'])->name('travelIndex');
+    Route::get('/travels/{travel:slug}/tours', [TourController::class, 'index'])->name('tourIndex');
+
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::middleware('restrictRole:admin')->group(function () {
+            Route::post('/travel', [TravelController::class, 'store'])->name('travelStore');
+            Route::post('/travels/{travel:slug}/tour', [TourController::class, 'store'])->name('tourStore');
+        });
+        Route::put('/travels/{travel:slug}', [TravelController::class, 'update'])->name('travelUpdate');
+    });
+
 });

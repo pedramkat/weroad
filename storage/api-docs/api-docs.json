@@ -1,0 +1,558 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "WEROAD",
+        "description": "Api documentation",
+        "contact": {
+            "email": "peramkat@gmail.com"
+        },
+        "version": "1.0.0",
+        "x-logo": {
+            "url": "https://theme.zdassets.com/theme_assets/9115960/ef5800cc529889d180b05b57e40dd50e5c7adb73.png"
+        }
+    },
+    "paths": {
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "User login",
+                "description": "Authenticate user and generate a bearer token",
+                "operationId": "c5e838284c7f343f0e5e5fd589161c96",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "description": "User's email",
+                                        "type": "string",
+                                        "example": "admin@weroad.it"
+                                    },
+                                    "password": {
+                                        "description": "User's password",
+                                        "type": "string",
+                                        "example": "admin"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful login",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token": {
+                                            "description": "Bearer token for authentication",
+                                            "type": "string",
+                                            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                                        },
+                                        "name": {
+                                            "description": "User's name",
+                                            "type": "string",
+                                            "example": "Jhon"
+                                        },
+                                        "role": {
+                                            "description": "User's role",
+                                            "type": "string",
+                                            "example": "admin"
+                                        },
+                                        "email_verified_at": {
+                                            "description": "Verification time",
+                                            "type": "string",
+                                            "example": "2023-07-10T23:10:58.000000Z"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "description": "Error status",
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "message": {
+                                            "description": "Error message",
+                                            "type": "string",
+                                            "example": "The provided credentials are incorrect."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Logout",
+                "description": "Logs out the authenticated user and revokes the access token",
+                "operationId": "logout",
+                "responses": {
+                    "200": {
+                        "description": "Successful logout",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Successfully logged out"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/travels/{travel:slug}/tours": {
+            "get": {
+                "tags": [
+                    "Api v1 - Tours"
+                ],
+                "summary": "Retrieve tours for a specific travel",
+                "description": "Get a list of tours for a specific travel based on the provided filters",
+                "operationId": "a1084137b606dfdde9b1efe97ee047d1",
+                "parameters": [
+                    {
+                        "name": "travel:slug",
+                        "in": "path",
+                        "description": "Slug of the travel to retrieve tours for",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "jordan-360"
+                    },
+                    {
+                        "name": "priceFrom",
+                        "in": "query",
+                        "description": "Minimum price for filtering tours",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "priceTo",
+                        "in": "query",
+                        "description": "Maximum price for filtering tours",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "dateFrom",
+                        "in": "query",
+                        "description": "Minimum starting date for filtering tours",
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "dateTo",
+                        "in": "query",
+                        "description": "Maximum ending date for filtering tours",
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "sortBy",
+                        "in": "query",
+                        "description": "Field to sort the tours by",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "price"
+                    },
+                    {
+                        "name": "sortOrder",
+                        "in": "query",
+                        "description": "Sorting order ('asc' or 'desc')",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        },
+                        "example": "desc"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of tours for the specified travel"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/api/v1/travels/{travel:slug}/tour": {
+            "post": {
+                "tags": [
+                    "Api v1 - Tours"
+                ],
+                "summary": "Create a new tour for a travel",
+                "description": "Store a newly created tour for a specific travel in the database",
+                "operationId": "5814af6430b23edaa8bcdfdba62bf1ea",
+                "parameters": [
+                    {
+                        "name": "travel:slug",
+                        "in": "path",
+                        "description": "Slug of the travel to associate the tour with",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "varchar"
+                        },
+                        "example": "jordan-360"
+                    }
+                ],
+                "requestBody": {
+                    "description": "Tour details",
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "new tour"
+                                    },
+                                    "startingDate": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2023-10-01"
+                                    },
+                                    "endingDate": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2023-10-10"
+                                    },
+                                    "price": {
+                                        "type": "string",
+                                        "example": "2345"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Tour created successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/travels": {
+            "get": {
+                "tags": [
+                    "Api v1 - Travels"
+                ],
+                "summary": "Get all travels",
+                "description": "Retrieve a list of all travels",
+                "operationId": "bfe3c61041966f70bfcafc8019bd7fd4",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/travel": {
+            "post": {
+                "tags": [
+                    "Api v1 - Travels"
+                ],
+                "summary": "Create a new travel",
+                "description": "Store a newly created travel in the database",
+                "operationId": "b9effdf8c24f61ad7f0b77849f110828",
+                "requestBody": {
+                    "description": "Travel details",
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "properties": {
+                                    "isPublic": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "new travel"
+                                    },
+                                    "slug": {
+                                        "type": "string",
+                                        "example": "new-travel"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "content of the first travel"
+                                    },
+                                    "numberOfDays": {
+                                        "type": "integer",
+                                        "example": "10"
+                                    },
+                                    "nature": {
+                                        "type": "integer",
+                                        "example": "20"
+                                    },
+                                    "relax": {
+                                        "type": "integer",
+                                        "example": "30"
+                                    },
+                                    "history": {
+                                        "type": "integer",
+                                        "example": "40"
+                                    },
+                                    "culture": {
+                                        "type": "integer",
+                                        "example": "50"
+                                    },
+                                    "party": {
+                                        "type": "integer",
+                                        "example": "60"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Travel created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Travel created successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/travels/{travel:slug}": {
+            "put": {
+                "tags": [
+                    "Api v1 - Travels"
+                ],
+                "summary": "Update a travel",
+                "description": "Update an existing travel in the database base on the give slug",
+                "operationId": "19f184c137c5db272277078b85da4a36",
+                "parameters": [
+                    {
+                        "name": "travel:slug",
+                        "in": "path",
+                        "description": "slug of the travel to update",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "varchar"
+                        },
+                        "example": "united-arab-emirates"
+                    }
+                ],
+                "requestBody": {
+                    "description": "Travel details",
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "required": [
+                                    "isPublic",
+                                    "name",
+                                    "numberOfDays",
+                                    "description"
+                                ],
+                                "properties": {
+                                    "isPublic": {
+                                        "type": "integer",
+                                        "format": "int32",
+                                        "example": "1"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "new united arab emirates"
+                                    },
+                                    "numberOfDays": {
+                                        "type": "integer",
+                                        "format": "int32",
+                                        "example": "5"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "new content"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Travel updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Travel updated successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "headers": {
+            "Accept": {
+                "description": "The content type the client is willing to accept in the response",
+                "schema": {
+                    "type": "string",
+                    "default": "application/json",
+                    "example": "application/json"
+                }
+            },
+            "Content-Type": {
+                "description": "The content type of the request body",
+                "schema": {
+                    "type": "string",
+                    "default": "application/vnd.api+json",
+                    "example": "application/vnd.api+json"
+                }
+            },
+            "Cache-Control": {
+                "description": "Specify 'no-store' to ensure responses are not cached",
+                "schema": {
+                    "type": "string",
+                    "default": "no-store",
+                    "example": "no-store"
+                }
+            }
+        },
+        "securitySchemes": {
+            "sanctum": {
+                "type": "apiKey",
+                "description": "Enter token in format (Bearer <token>)",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    },
+    "security": [
+        {
+            "bearerAuth": []
+        }
+    ]
+}
