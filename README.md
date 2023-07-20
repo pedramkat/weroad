@@ -27,21 +27,16 @@ This project achieves these goals:
     Alternativly:
     - `psql -c "CREATE DATABASE weroad"`
     - `psql -c "CREATE DATABASE weroad_test"`
-4. Copy the Username and Password in the .env.example of the project
+4. Create .env file
+    - `cp .env.example .env`
+4. Copy the database Username and Password in the .env of the project
     - DB_USERNAME={username}
     - DB_PASSWORD={password}
+4. Copy the database Username and Password in the .env.testing of the project
+    - DB_USERNAME={username}
+    - DB_PASSWORD={password} 
 5. Lunch the deploy command
     - `bash scripts/deploy_local.sh`
-
-**Lunch the test**
-`php artisan test`
-
-**Lunch the phpstan**
-`./vendor/bin/phpstan analyse`
-
-**Lunch the php cs fixer test**
-`./vendor/bin/pint --test`
-
 ## Usage
 In the root directory lunch
 `php artisan serve`
@@ -59,6 +54,17 @@ Password: editor
 
 ## API documentation
 http://127.0.0.1:8000/api/documentation
+## Testing
+
+**Lunch the test**
+`php artisan test`
+
+**Lunch the phpstan**
+`./vendor/bin/phpstan analyse`
+
+**Lunch the php cs fixer test**
+`./vendor/bin/pint --test`
+
 ### License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
