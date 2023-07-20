@@ -37,10 +37,9 @@ This project achieves these goals:
     - DB_PASSWORD={password} 
 5. Lunch the deploy command
     - `bash scripts/deploy_local.sh`
-## Usage
-In the root directory lunch
-`php artisan serve`
 
+Now the platform is up and running see the **Usage** section below.
+## Usage
 Backend login:
 http://127.0.0.1:8000
 

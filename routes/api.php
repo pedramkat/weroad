@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('/login', [LoginController::class, 'login']);
-Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth:sanctum');
 
 Route::name('api.')->prefix('v1')->group(function () {
 
