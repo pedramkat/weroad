@@ -23,9 +23,10 @@ This project achieves these goals:
     Connect to the database `psql`, then:
     - `create database weroad`
     - `create database weroad_test`
+    
     Alternativly:
-    - `psql -c "CREATE DATABASE weroad`
-    - `psql -c "CREATE DATABASE weroad_test`
+    - `psql -c "CREATE DATABASE weroad"`
+    - `psql -c "CREATE DATABASE weroad_test"`
 4. Copy the Username and Password in the .env.example of the project
     - DB_USERNAME={username}
     - DB_PASSWORD={password}
@@ -41,9 +42,10 @@ This project achieves these goals:
 **Lunch the php cs fixer test**
 `./vendor/bin/pint --test`
 
-## API documentation
-http://127.0.0.1:8000/api/documentation
 ## Usage
+In the root directory lunch
+`php artisan serve`
+
 Backend login:
 http://127.0.0.1:8000
 
@@ -55,6 +57,8 @@ Editor login:
 Email: editor@weroad.com
 Password: editor
 
+## API documentation
+http://127.0.0.1:8000/api/documentation
 ### License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
